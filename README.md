@@ -1,7 +1,7 @@
-Vous trouverez ci-joint les flows Node-Red des TP IOT./
+Vous trouverez ci-joint les flows Node-Red des TP IOT.
 
 # TP BLE : flow-ble.json
-## Régulation d'un arrosage de plante en pot./
+## Régulation d'un arrosage de plante en pot.
 Matériel :
 - ESP32-H2 utilisant le BLE.
 - Un capteur d'humidité du sol.
