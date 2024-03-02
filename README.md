@@ -8,3 +8,5 @@ Matériel :
 - Un relais 5V
 - Une pompe 12V
 - Une passerelle BLE2MQTT : https://github.com/bouhenic/BLE2MQTT
+
+![Alt text](dash1.png)
