@@ -1,0 +1,22 @@
+[
+    {
+        "id": "c119ba9310cf91a8",
+        "type": "function",
+        "z": "70ac6febe8cbd9d6",
+        "name": "mémorisation état pompe",
+        "func": "flow.set(\"etatPompe\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 940,
+        "wires": [
+            [
+                "fe01de36507dfe1b"
+            ]
+        ]
+    }
+]
