@@ -1,0 +1,385 @@
+[
+    {
+        "id": "02ca4d10535e2023",
+        "type": "tab",
+        "label": "Flux 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7617762ed5be5596",
+        "type": "inject",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"state\":\"TOGGLE\"}",
+        "payloadType": "json",
+        "x": 250,
+        "y": 200,
+        "wires": [
+            [
+                "26a2b8a376b7130c"
+            ]
+        ]
+    },
+    {
+        "id": "26a2b8a376b7130c",
+        "type": "mqtt out",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "topic": "zigbee2mqtt/IKEA_GU10/set",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c147c43829b9607",
+        "x": 960,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "bd3a263036e7eb7d",
+        "type": "mqtt in",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "topic": "zigbee2mqtt/IKEA_SWITCH",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "3c147c43829b9607",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "b06d2d8138f1fa8f"
+            ]
+        ]
+    },
+    {
+        "id": "9c707c98fbb0d6d0",
+        "type": "debug",
+        "z": "02ca4d10535e2023",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "37c6c0c5d6ce99c7",
+        "type": "mqtt out",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "topic": "zigbee2mqtt/LED/set",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c147c43829b9607",
+        "x": 420,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "6a597a59942d4525",
+        "type": "inject",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"state\":\"TOGGLE\"}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 560,
+        "wires": [
+            [
+                "37c6c0c5d6ce99c7"
+            ]
+        ]
+    },
+    {
+        "id": "55065899143c5527",
+        "type": "function",
+        "z": "02ca4d10535e2023",
+        "name": "function 12",
+        "func": "// Récupère l'ampoule sélectionnée depuis le contexte de stockage ou initialise à null si non définie\nlet selectedBulb = flow.get(\"selectedBulb\") || null;\nlet gu10;\nlet selectedOutput = null; // Pour stocker la sortie binaire de la sélection\n\n// Gère la sélection de l'ampoule\nif (msg.payload.action == \"arrow_left_click\") {\n    // Sélectionne l'ampoule de gauche\n    flow.set(\"selectedBulb\", \"left\");\n    selectedOutput = { \"payload\": 0 }; // Indique la sélection du spot de gauche\n} else if (msg.payload.action == \"arrow_right_click\") {\n    // Sélectionne l'ampoule de droite\n    flow.set(\"selectedBulb\", \"right\");\n    selectedOutput = { \"payload\": 1 }; // Indique la sélection du spot de droite\n}\n\n// Si une action est déclenchée, prépare le message en fonction de l'action\nif (selectedBulb && msg.payload.action != \"arrow_left_click\" && msg.payload.action != \"arrow_right_click\") {\n    if (msg.payload.action == \"toggle\") {\n        gu10 = { \"payload\": { \"state\": \"toggle\" } };\n    } else if (msg.payload.action == \"brightness_up_click\") {\n        gu10 = { \"payload\": { \"brightness_step\": 40 } };\n    } else if (msg.payload.action == \"brightness_down_click\") {\n        gu10 = { \"payload\": { \"brightness_step\": -40 } };\n    }\n}\n\n// Détermine sur quelle sortie envoyer le message en fonction de l'ampoule sélectionnée\nlet output = [null, null, selectedOutput]; // Initialise les deux premières sorties à null et la troisième à la sélection\nif (gu10) {\n    if (selectedBulb == \"left\") {\n        output[0] = gu10; // Envoie le message à l'ampoule de gauche\n    } else if (selectedBulb == \"right\") {\n        output[1] = gu10; // Envoie le message à l'ampoule de droite\n    }\n}\n\nreturn output;\n\n\n\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 320,
+        "wires": [
+            [
+                "69dca97aa7ac4922",
+                "26a2b8a376b7130c"
+            ],
+            [
+                "a7e4dbe9bb2b04e5"
+            ],
+            [
+                "28b803d6d1b69700"
+            ]
+        ]
+    },
+    {
+        "id": "b06d2d8138f1fa8f",
+        "type": "json",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "55065899143c5527"
+            ]
+        ]
+    },
+    {
+        "id": "69dca97aa7ac4922",
+        "type": "debug",
+        "z": "02ca4d10535e2023",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a7e4dbe9bb2b04e5",
+        "type": "mqtt out",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "topic": "zigbee2mqtt/LED/set",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c147c43829b9607",
+        "x": 1060,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "ad6f780a11d851f7",
+        "type": "ui_text",
+        "z": "02ca4d10535e2023",
+        "group": "e6c6e3139213bf78",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SELECTION",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1110,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "28b803d6d1b69700",
+        "type": "function",
+        "z": "02ca4d10535e2023",
+        "name": "function 13",
+        "func": "if(msg.payload==0){msg.payload=\"SPOT SELECTED\"}\nelse {msg.payload=\"LED SELECTED\"}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 540,
+        "wires": [
+            [
+                "9c707c98fbb0d6d0",
+                "ad6f780a11d851f7"
+            ]
+        ]
+    },
+    {
+        "id": "c903fe635211be13",
+        "type": "mqtt out",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "topic": "zigbee2mqtt/LED/set",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c147c43829b9607",
+        "x": 1080,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "89893ecf2bffc8b3",
+        "type": "function",
+        "z": "02ca4d10535e2023",
+        "name": "function 14",
+        "func": "\n\nlet hex = msg.payload;\n\n// Construire le payload avec la valeur hex\nmsg.payload = { \"color\": { \"hex\": hex } };\n\n// Retourner le message modifié\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 940,
+        "wires": [
+            [
+                "c903fe635211be13"
+            ]
+        ]
+    },
+    {
+        "id": "a13a42bea79a542c",
+        "type": "ui_colour_picker",
+        "z": "02ca4d10535e2023",
+        "name": "",
+        "label": "",
+        "group": "20ca16f455223f2b",
+        "format": "hex",
+        "outformat": "string",
+        "showSwatch": true,
+        "showPicker": false,
+        "showValue": false,
+        "showHue": false,
+        "showAlpha": false,
+        "showLightness": true,
+        "square": "false",
+        "dynOutput": "false",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 470,
+        "y": 940,
+        "wires": [
+            [
+                "89893ecf2bffc8b3"
+            ]
+        ]
+    },
+    {
+        "id": "3c147c43829b9607",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "9c59ca1a6ebd4b589b200bd5d0a114f6.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e6c6e3139213bf78",
+        "type": "ui_group",
+        "name": "LIGHT SELECTION",
+        "tab": "cfc2398d505d9da8",
+        "order": 6,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "20ca16f455223f2b",
+        "type": "ui_group",
+        "name": "COLOR SELECTION",
+        "tab": "cfc2398d505d9da8",
+        "order": 7,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cfc2398d505d9da8",
+        "type": "ui_tab",
+        "name": "DASHBOARD ZIGBEE",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

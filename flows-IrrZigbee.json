@@ -1,0 +1,981 @@
+[
+    {
+        "id": "af20f4043e440fd0",
+        "type": "tab",
+        "label": "Flux 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "13cff928f199b59a",
+        "type": "mqtt in",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "topic": "zigbee2mqtt/Valve",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "6ea126c6d2972499",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 200,
+        "wires": [
+            [
+                "762e757b71ac0ff2",
+                "8e8c26b41ec724f7"
+            ]
+        ]
+    },
+    {
+        "id": "762e757b71ac0ff2",
+        "type": "debug",
+        "z": "af20f4043e440fd0",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "20942cef34d8102e",
+        "type": "mqtt out",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "topic": "zigbee2mqtt/Valve/set",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6ea126c6d2972499",
+        "x": 720,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "0313722c5828ee46",
+        "type": "inject",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"state\":\"ON\"}",
+        "payloadType": "json",
+        "x": 470,
+        "y": 560,
+        "wires": [
+            [
+                "20942cef34d8102e"
+            ]
+        ]
+    },
+    {
+        "id": "c3450a1b8b790d96",
+        "type": "ui_switch",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "label": "Order valve",
+        "tooltip": "",
+        "group": "476370f5955c695d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "radio_button_checked",
+        "oncolor": "Red",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "radio_button_unchecked",
+        "offcolor": "Green",
+        "animate": false,
+        "className": "",
+        "x": 210,
+        "y": 680,
+        "wires": [
+            [
+                "430bde9718464389"
+            ]
+        ]
+    },
+    {
+        "id": "430bde9718464389",
+        "type": "change",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "{\"state\":\"ON\"}",
+                "tot": "json"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "{\"state\":\"OFF\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 680,
+        "wires": [
+            [
+                "20942cef34d8102e"
+            ]
+        ]
+    },
+    {
+        "id": "42ce677365e68a21",
+        "type": "inject",
+        "z": "af20f4043e440fd0",
+        "name": "{\"state\":\"OFF\"}",
+        "props": [
+            {
+                "p": "topic",
+                "v": "{\"state\":\"OFF\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 480,
+        "y": 500,
+        "wires": [
+            [
+                "20942cef34d8102e"
+            ]
+        ]
+    },
+    {
+        "id": "8e8c26b41ec724f7",
+        "type": "json",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "507a3b9a4e6322e6",
+                "a61704bde85008e9"
+            ]
+        ]
+    },
+    {
+        "id": "217e1a170e017705",
+        "type": "debug",
+        "z": "af20f4043e440fd0",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "a61704bde85008e9",
+        "type": "function",
+        "z": "af20f4043e440fd0",
+        "name": "function 4",
+        "func": "// Vérifier si l'état du message reçu est \"ON\"\nif (msg.payload.state == \"ON\") {\n    // Renvoie true si l'état est \"ON\"\n    return { payload: true };\n} else {\n    // Renvoie false dans tous les autres cas (y compris \"OFF\")\n    return { payload: false};\n}\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 340,
+        "wires": [
+            [
+                "217e1a170e017705",
+                "2fb3b5d59bec579d"
+            ]
+        ]
+    },
+    {
+        "id": "4021562051929b61",
+        "type": "ui_button",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "group": "affa5bc206c4af74",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Publier",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "orange",
+        "className": "",
+        "icon": "",
+        "payload": "button_pressed",
+        "payloadType": "str",
+        "topic": "payload",
+        "topicType": "msg",
+        "x": 140,
+        "y": 880,
+        "wires": [
+            [
+                "5bf51d2a968f33ec"
+            ]
+        ]
+    },
+    {
+        "id": "bd7e5b6438ca445f",
+        "type": "ui_dropdown",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "label": "Mode",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "affa5bc206c4af74",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "capacity",
+                "value": true,
+                "type": "bool"
+            },
+            {
+                "label": "duration",
+                "value": false,
+                "type": "bool"
+            }
+        ],
+        "payload": "",
+        "topic": "payload",
+        "topicType": "msg",
+        "className": "",
+        "x": 130,
+        "y": 820,
+        "wires": [
+            [
+                "7b594866c5014369"
+            ]
+        ]
+    },
+    {
+        "id": "19ca60822ce2bc04",
+        "type": "mqtt out",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "topic": "zigbee2mqtt/Valve/set",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6ea126c6d2972499",
+        "x": 880,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "7b594866c5014369",
+        "type": "change",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "{\"mode\":\"capacity\"}",
+                "tot": "json"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "{\"mode\":\"duration\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 820,
+        "wires": [
+            [
+                "5bf51d2a968f33ec"
+            ]
+        ]
+    },
+    {
+        "id": "5bf51d2a968f33ec",
+        "type": "function",
+        "z": "af20f4043e440fd0",
+        "name": "function 5",
+        "func": "let lastInput = flow.get(\"lastInput\") || \"\"; // Récupérer la dernière entrée stockée\n\nif (msg.payload === \"button_pressed\") { // Identifier si le message provient du bouton\n    let payload = lastInput;\n    return { payload: payload };\n} else { // Sinon, stocker la dernière entrée de texte\n    flow.set(\"lastInput\", msg.payload);\n    return null; // Ne pas envoyer de message maintenant\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 880,
+        "wires": [
+            [
+                "19ca60822ce2bc04"
+            ]
+        ]
+    },
+    {
+        "id": "332cb887834559ce",
+        "type": "ui_text_input",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "label": "Target",
+        "tooltip": "",
+        "group": "55b78bc8b7023423",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "number",
+        "delay": 300,
+        "topic": "payload",
+        "sendOnBlur": false,
+        "className": "",
+        "topicType": "msg",
+        "x": 130,
+        "y": 1000,
+        "wires": [
+            [
+                "9a6d523172420151"
+            ]
+        ]
+    },
+    {
+        "id": "9a6d523172420151",
+        "type": "function",
+        "z": "af20f4043e440fd0",
+        "name": "function 6",
+        "func": "let lastInput2 = flow.get(\"lastInput2\") || \"\"; // Récupérer la dernière entrée stockée\n\nif (msg.payload === \"button_pressed\") { // Identifier si le message provient du bouton\n    // Utiliser la valeur stockée comme irrigation_target\n    let irrigationTarget = lastInput2;\n    // Créer et retourner un objet avec la propriété irrigation_target définie\n    return { payload: { \"irrigation_target\": irrigationTarget } };\n} else { // Sinon, stocker la dernière entrée de texte\n    flow.set(\"lastInput2\", msg.payload);\n    return null; // Ne pas envoyer de message maintenant\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 1020,
+        "wires": [
+            [
+                "2e4129494fee2a84"
+            ]
+        ]
+    },
+    {
+        "id": "fcf64b93e471164b",
+        "type": "ui_button",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "group": "55b78bc8b7023423",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Publier",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "orange",
+        "className": "",
+        "icon": "",
+        "payload": "button_pressed",
+        "payloadType": "str",
+        "topic": "payload",
+        "topicType": "msg",
+        "x": 140,
+        "y": 1060,
+        "wires": [
+            [
+                "9a6d523172420151"
+            ]
+        ]
+    },
+    {
+        "id": "2e4129494fee2a84",
+        "type": "mqtt out",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "topic": "zigbee2mqtt/Valve/set",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6ea126c6d2972499",
+        "x": 880,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "34a3bbbfc2f8917c",
+        "type": "debug",
+        "z": "af20f4043e440fd0",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "75bb60cbbc265680",
+        "type": "ui_gauge",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "group": "597a3e30233b143e",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "BATTERY",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#ff2600",
+            "#e6e600",
+            "#669c35"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 980,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "507a3b9a4e6322e6",
+        "type": "function",
+        "z": "af20f4043e440fd0",
+        "name": "function 7",
+        "func": "// Création d'un tableau pour stocker les messages de sortie\nlet messages = [];\n\n// Ajouter chaque propriété comme un message distinct dans le tableau\nmessages.push({ payload: msg.payload.battery }); // Sortie 1\nmessages.push({ payload: msg.payload.irrigation_end_time }); // Sortie 2\nmessages.push({ payload: msg.payload.irrigation_start_time }); // Sortie 3\nmessages.push({ payload: msg.payload.irrigation_target }); // Sortie 4\nmessages.push({ payload: msg.payload.last_irrigation_duration }); // Sortie 5\nmessages.push({ payload: msg.payload.mode }); // Sortie 6\nmessages.push({ payload: msg.payload.state }); // Sortie 7\nmessages.push({ payload: msg.payload.water_consumed }); // Sortie 8\n\n// Renvoyer le tableau de messages\nreturn [[messages[0]], [messages[1]], [messages[2]], \n[messages[3]], [messages[4]], [messages[5]], [messages[6]], \n[messages[7]], [messages[8]], [messages[9]]];\n\n",
+        "outputs": 8,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 120,
+        "wires": [
+            [
+                "75bb60cbbc265680",
+                "34a3bbbfc2f8917c"
+            ],
+            [
+                "9f26bb7958d75b65"
+            ],
+            [
+                "f61438f6f6f77817"
+            ],
+            [
+                "2b5fbd5cb2803a96"
+            ],
+            [
+                "1e64ff73d4c18d75"
+            ],
+            [
+                "37e60fc675d8af18"
+            ],
+            [
+                "8d9ceb07ee4c7b34"
+            ],
+            [
+                "1cdb0829822de3c5"
+            ]
+        ]
+    },
+    {
+        "id": "9f26bb7958d75b65",
+        "type": "ui_text",
+        "z": "af20f4043e440fd0",
+        "group": "597a3e30233b143e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "IRRIGATION END TIME",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1050,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f61438f6f6f77817",
+        "type": "ui_text",
+        "z": "af20f4043e440fd0",
+        "group": "597a3e30233b143e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "IRRIGATION START TIME",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1050,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2b5fbd5cb2803a96",
+        "type": "ui_text",
+        "z": "af20f4043e440fd0",
+        "group": "597a3e30233b143e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "TARGET",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "1e64ff73d4c18d75",
+        "type": "ui_text",
+        "z": "af20f4043e440fd0",
+        "group": "597a3e30233b143e",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "LAST IRRIGATION DURATION",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1110,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "37e60fc675d8af18",
+        "type": "ui_text",
+        "z": "af20f4043e440fd0",
+        "group": "597a3e30233b143e",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "MODE",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1030,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "8d9ceb07ee4c7b34",
+        "type": "ui_text",
+        "z": "af20f4043e440fd0",
+        "group": "597a3e30233b143e",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "STATE",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1050,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "1cdb0829822de3c5",
+        "type": "ui_text",
+        "z": "af20f4043e440fd0",
+        "group": "597a3e30233b143e",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "WATER CONSUMED",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1120,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "2fb3b5d59bec579d",
+        "type": "link out",
+        "z": "af20f4043e440fd0",
+        "name": "switch_order",
+        "mode": "link",
+        "links": [
+            "db5c9c4db5bf3013"
+        ],
+        "x": 825,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "db5c9c4db5bf3013",
+        "type": "link in",
+        "z": "af20f4043e440fd0",
+        "name": "link in 1",
+        "links": [
+            "2fb3b5d59bec579d"
+        ],
+        "x": 85,
+        "y": 680,
+        "wires": [
+            [
+                "c3450a1b8b790d96"
+            ]
+        ]
+    },
+    {
+        "id": "6711c7bed35a62e2",
+        "type": "mqtt in",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "topic": "zigbee2mqtt/soilSensor",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "6ea126c6d2972499",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 420,
+        "y": 1740,
+        "wires": [
+            [
+                "6dfd4baa46ae3748"
+            ]
+        ]
+    },
+    {
+        "id": "4b7ef1f91b262ce5",
+        "type": "function",
+        "z": "af20f4043e440fd0",
+        "name": "function extract soil sensor",
+        "func": "// Création d'un tableau pour stocker les messages de sortie\nlet messages = [];\n\n// Ajouter chaque propriété comme un message distinct dans le tableau\nmessages.push({ payload: msg.payload.battery }); // Sortie 1\nmessages.push({ payload: msg.payload.soil_moisture }); // Sortie 2\nmessages.push({ payload: msg.payload.temperature }); // Sortie 3\n\n\n// Renvoyer le tableau de messages\nreturn [[messages[0]], [messages[1]], [messages[2]]];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 1740,
+        "wires": [
+            [
+                "74f5e5195d2adf47"
+            ],
+            [
+                "9979096bb04e529e"
+            ],
+            [
+                "fa865b83ee8288b9"
+            ]
+        ]
+    },
+    {
+        "id": "6dfd4baa46ae3748",
+        "type": "json",
+        "z": "af20f4043e440fd0",
+        "name": "Json2Js",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 640,
+        "y": 1740,
+        "wires": [
+            [
+                "4b7ef1f91b262ce5"
+            ]
+        ]
+    },
+    {
+        "id": "74f5e5195d2adf47",
+        "type": "ui_gauge",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "group": "9a08d7f912d72d12",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Battery",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#ff2600",
+            "#e6e600",
+            "#669c35"
+        ],
+        "seg1": "40",
+        "seg2": "70",
+        "diff": false,
+        "className": "",
+        "x": 1180,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "9979096bb04e529e",
+        "type": "ui_gauge",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "group": "9a08d7f912d72d12",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Soil moisture",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1190,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "fa865b83ee8288b9",
+        "type": "ui_gauge",
+        "z": "af20f4043e440fd0",
+        "name": "",
+        "group": "9a08d7f912d72d12",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1190,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "6ea126c6d2972499",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "zigbee2mqtt/Valve/set",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "476370f5955c695d",
+        "type": "ui_group",
+        "name": "COMMAND",
+        "tab": "cfc2398d505d9da8",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "affa5bc206c4af74",
+        "type": "ui_group",
+        "name": "MODE",
+        "tab": "cfc2398d505d9da8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "55b78bc8b7023423",
+        "type": "ui_group",
+        "name": "TARGET",
+        "tab": "cfc2398d505d9da8",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "597a3e30233b143e",
+        "type": "ui_group",
+        "name": "VALVE MESURES",
+        "tab": "cfc2398d505d9da8",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9a08d7f912d72d12",
+        "type": "ui_group",
+        "name": "MESURES SOIL SENSOR",
+        "tab": "cfc2398d505d9da8",
+        "order": 5,
+        "disp": true,
+        "width": 5,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cfc2398d505d9da8",
+        "type": "ui_tab",
+        "name": "DASHBOARD ZIGBEE",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
