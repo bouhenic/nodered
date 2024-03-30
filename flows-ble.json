@@ -1,22 +1,544 @@
 [
     {
-        "id": "c119ba9310cf91a8",
+        "id": "70ac6febe8cbd9d6",
+        "type": "tab",
+        "label": "Flux 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "df6d64337797179e",
+        "type": "mqtt in",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "topic": "ble/sensor",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "6ea126c6d2972499",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "7d0cac3061432060"
+            ]
+        ]
+    },
+    {
+        "id": "5b7d87de8cbd7e68",
+        "type": "debug",
+        "z": "70ac6febe8cbd9d6",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "0bcdcca29c50248a",
+        "type": "inject",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "94f6311068a60b30"
+            ]
+        ]
+    },
+    {
+        "id": "94f6311068a60b30",
+        "type": "mqtt out",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "topic": "ble/led/command",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6ea126c6d2972499",
+        "x": 490,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "d0036c684b3f438a",
+        "type": "inject",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "94f6311068a60b30"
+            ]
+        ]
+    },
+    {
+        "id": "9237f635da3ef3aa",
+        "type": "ui_switch",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "label": "ON/OFF",
+        "tooltip": "",
+        "group": "cb8132b80dc6faae",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 140,
+        "y": 420,
+        "wires": [
+            [
+                "94f6311068a60b30"
+            ]
+        ]
+    },
+    {
+        "id": "05918bad86e147d9",
+        "type": "ui_switch",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "label": "AUTO/MANUEL",
+        "tooltip": "",
+        "group": "91953b41a430d82f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 120,
+        "y": 700,
+        "wires": [
+            [
+                "9a6cb53e9488854f",
+                "39f9625d0de0a14d"
+            ]
+        ]
+    },
+    {
+        "id": "a5adaee9213e59f2",
+        "type": "debug",
+        "z": "70ac6febe8cbd9d6",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "9a6cb53e9488854f",
+        "type": "change",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 560,
+        "wires": [
+            [
+                "a5adaee9213e59f2",
+                "9237f635da3ef3aa"
+            ]
+        ]
+    },
+    {
+        "id": "7d0cac3061432060",
         "type": "function",
         "z": "70ac6febe8cbd9d6",
-        "name": "mémorisation état pompe",
-        "func": "flow.set(\"etatPompe\", msg.payload);\nreturn msg;",
+        "name": "Conversion ",
+        "func": "// Récupère la valeur du payload supposée être la valeur lue par le CAN\nlet valeurCAN = msg.payload;\n\n// Convertit la valeur CAN en pourcentage avec l'inversion\nlet pourcentage = (1 - valeurCAN / 4095) * 100;\n\n// Arrondit le résultat à deux décimales, si nécessaire\npourcentage = Math.round(pourcentage * 100) / 100;\n\n// Met à jour le payload avec le pourcentage calculé\nmsg.payload = pourcentage;\n\n// Retourne le message modifié\nreturn msg;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 670,
-        "y": 940,
+        "x": 350,
+        "y": 120,
+        "wires": [
+            [
+                "7e07796be2a12efb",
+                "30a02454f9801a96",
+                "632367f7e5db0a76"
+            ]
+        ]
+    },
+    {
+        "id": "7e07796be2a12efb",
+        "type": "function",
+        "z": "70ac6febe8cbd9d6",
+        "name": "Arrosage",
+        "func": "// Récupère la valeur d'humidité du payload\nlet humidite = msg.payload;\n\n// Définit les seuils pour l'humidité\nconst seuilBas = 40;\nconst seuilHaut = 80;\n\n// Récupère la valeur du mode du contexte du flux pour déterminer si l'arrosage est géré automatiquement\nlet mode = flow.get('mode');\n\n// Initialise une variable pour stocker l'état de l'arrosage\nlet etatArrosage;\n\n// Vérifie si le mode automatique est activé\nif (mode === false) {\n    if (humidite < seuilBas) {\n        // Si l'humidité est inférieure à 40% et le mode automatique est activé, déclenche l'arrosage\n        etatArrosage = 1;\n    } else if (humidite > seuilHaut) {\n        // Si l'humidité est supérieure à 80% et le mode automatique est activé, stoppe l'arrosage\n        etatArrosage = 0;\n    } else {\n        // Si l'humidité est entre 40% et 80% et le mode automatique est activé, ne change rien\n        etatArrosage = \"Maintenir l'état actuel de l'arrosage\";\n    }\n} else {\n    // Si le mode automatique n'est pas activé, ne change rien\n    //etatArrosage = \"Mode manuel activé - L'arrosage n'est pas ajusté automatiquement\";\n}\n\n// Prépare le message de sortie avec l'état de l'arrosage\nlet msgSortie = { payload: etatArrosage };\n\n// Retourne le message de sortie\nreturn msgSortie;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 120,
+        "wires": [
+            [
+                "5b7d87de8cbd7e68",
+                "e941420e7d1b663b"
+            ]
+        ]
+    },
+    {
+        "id": "30a02454f9801a96",
+        "type": "debug",
+        "z": "70ac6febe8cbd9d6",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "39f9625d0de0a14d",
+        "type": "function",
+        "z": "70ac6febe8cbd9d6",
+        "name": "gestion mode",
+        "func": "let mode = null;\nmode=msg.payload;\n// Exemple pour stocker une valeur dans le contexte du flux\nflow.set('mode', mode);\n\n// Exemple pour récupérer une valeur du contexte du flux\nlet valeur = flow.get('mode');\nif (valeur == true) { msg.payload = \"AUTOMATIQUE\"; }\nelse msg.payload=\"MANUEL\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 700,
+        "wires": [
+            [
+                "80dfdb49ef5cf3e6",
+                "ee0c0656329e8caf"
+            ]
+        ]
+    },
+    {
+        "id": "80dfdb49ef5cf3e6",
+        "type": "debug",
+        "z": "70ac6febe8cbd9d6",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "632367f7e5db0a76",
+        "type": "ui_gauge",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "group": "acf6166e3ac701ac",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "HUMIDITÉ DU SOL",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#e32400",
+            "#e6e600",
+            "#669c35"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 590,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "ee0c0656329e8caf",
+        "type": "ui_text",
+        "z": "70ac6febe8cbd9d6",
+        "group": "acf6166e3ac701ac",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "MODE",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "fe01de36507dfe1b",
+        "type": "ui_text",
+        "z": "70ac6febe8cbd9d6",
+        "group": "acf6166e3ac701ac",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "ETAT POMPE",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 680,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "8217d8d6b51196e5",
+        "type": "change",
+        "z": "70ac6febe8cbd9d6",
+        "name": "ON/OFF",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "num",
+                "to": "ON",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "num",
+                "to": "OFF",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 880,
         "wires": [
             [
                 "fe01de36507dfe1b"
             ]
         ]
+    },
+    {
+        "id": "0b85e77470852183",
+        "type": "mqtt in",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "topic": "ble/led/command",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "6ea126c6d2972499",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 880,
+        "wires": [
+            [
+                "8217d8d6b51196e5"
+            ]
+        ]
+    },
+    {
+        "id": "e941420e7d1b663b",
+        "type": "mqtt out",
+        "z": "70ac6febe8cbd9d6",
+        "name": "",
+        "topic": "ble/led/command",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6ea126c6d2972499",
+        "x": 890,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6ea126c6d2972499",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "zigbee2mqtt/Valve/set",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "cb8132b80dc6faae",
+        "type": "ui_group",
+        "name": "COMMANDE POMPE",
+        "tab": "b39b55419fe8e088",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "91953b41a430d82f",
+        "type": "ui_group",
+        "name": "MODE",
+        "tab": "b39b55419fe8e088",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "acf6166e3ac701ac",
+        "type": "ui_group",
+        "name": "MESURES",
+        "tab": "b39b55419fe8e088",
+        "order": 9,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b39b55419fe8e088",
+        "type": "ui_tab",
+        "name": "DASHBOARD BLE",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     }
 ]
