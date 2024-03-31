@@ -40,8 +40,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 920,
-        "y": 180,
+        "x": 820,
+        "y": 160,
         "wires": []
     },
     {
@@ -61,8 +61,8 @@
         "topic": "",
         "payload": "0",
         "payloadType": "num",
-        "x": 110,
-        "y": 240,
+        "x": 130,
+        "y": 480,
         "wires": [
             [
                 "94f6311068a60b30"
@@ -74,7 +74,7 @@
         "type": "mqtt out",
         "z": "70ac6febe8cbd9d6",
         "name": "",
-        "topic": "ble/led/command",
+        "topic": "ble/relay/command",
         "qos": "",
         "retain": "",
         "respTopic": "",
@@ -84,7 +84,7 @@
         "expiry": "",
         "broker": "6ea126c6d2972499",
         "x": 490,
-        "y": 300,
+        "y": 500,
         "wires": []
     },
     {
@@ -104,8 +104,8 @@
         "topic": "",
         "payload": "1",
         "payloadType": "num",
-        "x": 110,
-        "y": 320,
+        "x": 130,
+        "y": 540,
         "wires": [
             [
                 "94f6311068a60b30"
@@ -117,7 +117,7 @@
         "type": "ui_switch",
         "z": "70ac6febe8cbd9d6",
         "name": "",
-        "label": "ON/OFF",
+        "label": "OFF/ON",
         "tooltip": "",
         "group": "cb8132b80dc6faae",
         "order": 2,
@@ -138,10 +138,11 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 140,
-        "y": 420,
+        "x": 340,
+        "y": 620,
         "wires": [
             [
+                "b6ec993f3968460f",
                 "94f6311068a60b30"
             ]
         ]
@@ -173,7 +174,7 @@
         "animate": false,
         "className": "",
         "x": 120,
-        "y": 700,
+        "y": 720,
         "wires": [
             [
                 "9a6cb53e9488854f",
@@ -193,8 +194,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 600,
-        "y": 560,
+        "x": 440,
+        "y": 980,
         "wires": []
     },
     {
@@ -216,11 +217,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 250,
-        "y": 560,
+        "x": 150,
+        "y": 620,
         "wires": [
             [
-                "a5adaee9213e59f2",
                 "9237f635da3ef3aa"
             ]
         ]
@@ -252,7 +252,7 @@
         "type": "function",
         "z": "70ac6febe8cbd9d6",
         "name": "Arrosage",
-        "func": "// Récupère la valeur d'humidité du payload\nlet humidite = msg.payload;\n\n// Définit les seuils pour l'humidité\nconst seuilBas = 40;\nconst seuilHaut = 80;\n\n// Récupère la valeur du mode du contexte du flux pour déterminer si l'arrosage est géré automatiquement\nlet mode = flow.get('mode');\n\n// Initialise une variable pour stocker l'état de l'arrosage\nlet etatArrosage;\n\n// Vérifie si le mode automatique est activé\nif (mode === false) {\n    if (humidite < seuilBas) {\n        // Si l'humidité est inférieure à 40% et le mode automatique est activé, déclenche l'arrosage\n        etatArrosage = 1;\n    } else if (humidite > seuilHaut) {\n        // Si l'humidité est supérieure à 80% et le mode automatique est activé, stoppe l'arrosage\n        etatArrosage = 0;\n    } else {\n        // Si l'humidité est entre 40% et 80% et le mode automatique est activé, ne change rien\n        etatArrosage = \"Maintenir l'état actuel de l'arrosage\";\n    }\n} else {\n    // Si le mode automatique n'est pas activé, ne change rien\n    //etatArrosage = \"Mode manuel activé - L'arrosage n'est pas ajusté automatiquement\";\n}\n\n// Prépare le message de sortie avec l'état de l'arrosage\nlet msgSortie = { payload: etatArrosage };\n\n// Retourne le message de sortie\nreturn msgSortie;\n\n",
+        "func": "// Initialise les variables\nlet etatArrosage;\nconst seuilBas = 30;\nconst seuilHaut = 60;\nlet mode = flow.get('mode');\n\n// Vérifie si le payload contient une valeur numérique\nlet humidite = parseFloat(msg.payload);\nif (isNaN(humidite)) {\n    // Gère le cas où humidite n'est pas un nombre\n    // Par exemple, définir etatArrosage à une valeur indiquant une erreur ou ignorer la mise à jour\n    etatArrosage = \"Erreur: valeur d'humidité non valide\";\n} else {\n    // Le payload est un nombre, continue avec la logique existante\n    if (mode === false) {\n        if (humidite < seuilBas) {\n            // Si l'humidité est inférieure à 30% et le mode automatique est activé, déclenche l'arrosage\n            etatArrosage = 1;\n        } else if (humidite > seuilHaut) {\n            // Si l'humidité est supérieure à 60% et le mode automatique est activé, stoppe l'arrosage\n            etatArrosage = 0;\n        } else {\n            // Si l'humidité est entre 30% et 60% et le mode automatique est activé, ne change rien\n            etatArrosage = flow.get(\"state\") || \"État inconnu\"; // Utilise l'état actuel de l'arrosage ou un message par défaut si non disponible\n        }\n    } else {\n        // Si le mode automatique n'est pas activé, pourrait définir etatArrosage à une valeur spécifique ou le laisser indéfini\n        etatArrosage=flow.get('state');\n    }\n}\n\n// Prépare le message de sortie avec l'état de l'arrosage\nlet msgSortie = { payload: etatArrosage };\n\n// Retourne le message de sortie\nreturn msgSortie;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -264,7 +264,7 @@
         "wires": [
             [
                 "5b7d87de8cbd7e68",
-                "e941420e7d1b663b"
+                "562e41d06bd5a4b3"
             ]
         ]
     },
@@ -289,7 +289,7 @@
         "type": "function",
         "z": "70ac6febe8cbd9d6",
         "name": "gestion mode",
-        "func": "let mode = null;\nmode=msg.payload;\n// Exemple pour stocker une valeur dans le contexte du flux\nflow.set('mode', mode);\n\n// Exemple pour récupérer une valeur du contexte du flux\nlet valeur = flow.get('mode');\nif (valeur == true) { msg.payload = \"AUTOMATIQUE\"; }\nelse msg.payload=\"MANUEL\";\nreturn msg;",
+        "func": "let mode = null;\nmode=msg.payload;\n// Exemple pour stocker une valeur dans le contexte du flux\nflow.set('mode', mode);\n\n// Exemple pour récupérer une valeur du contexte du flux\nlet valeur = flow.get('mode');\nif (valeur == false) { msg.payload = \"AUTOMATIQUE\"; }\nelse msg.payload=\"MANUEL\";\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -297,10 +297,9 @@
         "finalize": "",
         "libs": [],
         "x": 380,
-        "y": 700,
+        "y": 720,
         "wires": [
             [
-                "80dfdb49ef5cf3e6",
                 "ee0c0656329e8caf"
             ]
         ]
@@ -318,8 +317,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 600,
-        "y": 700,
+        "x": 840,
+        "y": 620,
         "wires": []
     },
     {
@@ -368,7 +367,7 @@
         "fontSize": 16,
         "color": "#000000",
         "x": 610,
-        "y": 800,
+        "y": 720,
         "wires": []
     },
     {
@@ -435,7 +434,7 @@
         "type": "mqtt in",
         "z": "70ac6febe8cbd9d6",
         "name": "",
-        "topic": "ble/led/command",
+        "topic": "ble/relay/command",
         "qos": "0",
         "datatype": "auto-detect",
         "broker": "6ea126c6d2972499",
@@ -443,20 +442,41 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 160,
+        "x": 170,
         "y": 880,
         "wires": [
             [
-                "8217d8d6b51196e5"
+                "8217d8d6b51196e5",
+                "a5adaee9213e59f2"
             ]
         ]
     },
     {
-        "id": "e941420e7d1b663b",
+        "id": "b6ec993f3968460f",
+        "type": "function",
+        "z": "70ac6febe8cbd9d6",
+        "name": "Sauvegarde Etat pompe",
+        "func": "let state = null;\nstate=msg.payload;\n// Exemple pour stocker une valeur dans le contexte du flux\nflow.set('state', state);\n\n// Exemple pour récupérer une valeur du contexte du flux\nlet valeur = flow.get('state');\nif (valeur == true) { msg.payload = \"ON\"; }\nelse msg.payload=\"OFF\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 620,
+        "wires": [
+            [
+                "80dfdb49ef5cf3e6"
+            ]
+        ]
+    },
+    {
+        "id": "562e41d06bd5a4b3",
         "type": "mqtt out",
         "z": "70ac6febe8cbd9d6",
         "name": "",
-        "topic": "ble/led/command",
+        "topic": "ble/relay/command",
         "qos": "",
         "retain": "",
         "respTopic": "",
@@ -465,8 +485,8 @@
         "correl": "",
         "expiry": "",
         "broker": "6ea126c6d2972499",
-        "x": 890,
-        "y": 120,
+        "x": 850,
+        "y": 60,
         "wires": []
     },
     {
@@ -482,7 +502,7 @@
         "keepalive": "60",
         "cleansession": true,
         "autoUnsubscribe": true,
-        "birthTopic": "zigbee2mqtt/Valve/set",
+        "birthTopic": "",
         "birthQos": "0",
         "birthRetain": "false",
         "birthPayload": "",
